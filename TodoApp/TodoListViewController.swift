@@ -10,13 +10,15 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    let itemArray = ["Apple", "Orange", "Grapes"]
+    var itemArray = ["Apple", "Orange", "Grapes"]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    //MARK - TableView Data Source Methods
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableReuseID", for: indexPath)
         cell.textLabel?.text = itemArray[indexPath.row]
@@ -27,6 +29,7 @@ class TodoListViewController: UITableViewController {
         return itemArray.count
     }
     
+    //Mark - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
@@ -34,10 +37,33 @@ class TodoListViewController: UITableViewController {
         }else{
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
-        
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
+    
+    //MARK - DIALOG Add New Items
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todo Item", message: "Testing", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            // code when user clicks Add Item
+            self.itemArray.append(textField.text!)
+            //DispatchQueue.main.async {
+                self.tableView.reloadData()
+            //}
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 
