@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A1067041AEB0BD527EEFFBD /* Pods_TodoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95908DF14D01DF6680362F2E /* Pods_TodoApp.framework */; };
 		C545ED8223D3488600955940 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C545ED8123D3488600955940 /* AppDelegate.swift */; };
 		C545ED8423D3488600955940 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C545ED8323D3488600955940 /* SceneDelegate.swift */; };
 		C545ED8623D3488600955940 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C545ED8523D3488600955940 /* TodoListViewController.swift */; };
@@ -18,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A58B7CFE67F316644A181F0 /* Pods-TodoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoApp.debug.xcconfig"; path = "Target Support Files/Pods-TodoApp/Pods-TodoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		699DC5D19D8801BFF37143BF /* Pods-TodoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoApp.release.xcconfig"; path = "Target Support Files/Pods-TodoApp/Pods-TodoApp.release.xcconfig"; sourceTree = "<group>"; };
+		95908DF14D01DF6680362F2E /* Pods_TodoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C545ED7E23D3488600955940 /* TodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C545ED8123D3488600955940 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C545ED8323D3488600955940 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,17 +39,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A1067041AEB0BD527EEFFBD /* Pods_TodoApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E732AF5264769548EB8D75D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1A58B7CFE67F316644A181F0 /* Pods-TodoApp.debug.xcconfig */,
+				699DC5D19D8801BFF37143BF /* Pods-TodoApp.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		756F86F9905BC77C017CC7BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				95908DF14D01DF6680362F2E /* Pods_TodoApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C545ED7523D3488600955940 = {
 			isa = PBXGroup;
 			children = (
 				C545ED8023D3488600955940 /* TodoApp */,
 				C545ED7F23D3488600955940 /* Products */,
+				1E732AF5264769548EB8D75D /* Pods */,
+				756F86F9905BC77C017CC7BD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,9 +137,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C545ED9223D3488700955940 /* Build configuration list for PBXNativeTarget "TodoApp" */;
 			buildPhases = (
+				D739CCBF54402EC900AA47FD /* [CP] Check Pods Manifest.lock */,
 				C545ED7A23D3488600955940 /* Sources */,
 				C545ED7B23D3488600955940 /* Frameworks */,
 				C545ED7C23D3488600955940 /* Resources */,
+				A6D7A943A1ACC86D3344029A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -170,6 +197,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A6D7A943A1ACC86D3344029A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TodoApp/Pods-TodoApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TodoApp/Pods-TodoApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TodoApp/Pods-TodoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D739CCBF54402EC900AA47FD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TodoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C545ED7A23D3488600955940 /* Sources */ = {
@@ -322,6 +391,7 @@
 		};
 		C545ED9323D3488700955940 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A58B7CFE67F316644A181F0 /* Pods-TodoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -340,6 +410,7 @@
 		};
 		C545ED9423D3488700955940 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 699DC5D19D8801BFF37143BF /* Pods-TodoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
