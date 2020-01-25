@@ -8,8 +8,10 @@
 
 import UIKit
 import RealmSwift
-class CategoryViewController: UITableViewController {
+import ChameleonFramework
 
+class CategoryViewController: SwipeTableViewController {
+    
     var categoryList: Results<Category>?
     
     let realm = try! Realm()
@@ -18,7 +20,7 @@ class CategoryViewController: UITableViewController {
         super.viewDidLoad()
         loadCategory()
     }
-
+    
     //MARK: - Add New Categories
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -31,7 +33,7 @@ class CategoryViewController: UITableViewController {
             
             let newCategory = Category()
             newCategory.name = textField.text!
-            
+            newCategory.color = UIColor.randomFlat().hexValue()
             self.saveCategory(category: newCategory)
         }
         
@@ -45,13 +47,14 @@ class CategoryViewController: UITableViewController {
         
     }
     
-   
+    
     
     //MARK: - TableView Datasource Methods
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = categoryList?[indexPath.row].name ?? "No Categories Added!"
+        cell.backgroundColor = UIColor(hexString: categoryList?[indexPath.row].color ?? "FFFFFF")
         return cell
     }
     
@@ -73,21 +76,35 @@ class CategoryViewController: UITableViewController {
         
     }
     
+    //MARK: - Delete Data From Swipe
+    override func updateModel(at indexPath: IndexPath) {
+        if let category = self.categoryList?[indexPath.row]{
+            do{
+                try self.realm.write{
+                    self.realm.delete(category)
+                }
+            }catch{
+                print("Error saving done status, \(error)")
+            }
+        }
+    }
+    
     //MARK: - Data Manipulation Methods
+
     func saveCategory(category: Category){
-           do {
+        do {
             try realm.write {
                 realm.add(category)
             }
-           }catch {
-               print("Error saving context \(error)")
-           }
-           tableView.reloadData()
-       }
+        }catch {
+            print("Error saving context \(error)")
+        }
+        tableView.reloadData()
+    }
     
     func loadCategory(){
         categoryList = realm.objects(Category.self)
         tableView.reloadData()
     }
-
+    
 }

@@ -8,8 +8,10 @@
 
 import UIKit
 import RealmSwift
-class TodoListViewController: UITableViewController {
+import ChameleonFramework
+class TodoListViewController: SwipeTableViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     var todoItems : Results<Item>?
     
     let realm = try! Realm()
@@ -19,29 +21,71 @@ class TodoListViewController: UITableViewController {
         didSet{
             loadItems()
         }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+       
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        let originalColor = UIColor.systemGreen
+        
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation Controller does not exist.")}
+        
+        navBar.barTintColor = originalColor
+    }
+        
+    override func viewWillAppear(_ animated: Bool) {
+        title = selectedCategory!.name
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation Controller does not exist.")}
+        
+        navBar.barTintColor = UIColor(hexString: selectedCategory!.color)
+        searchBar.barTintColor = UIColor(hexString: selectedCategory!.color)
+
+        
+    }
+
     //MARK - TableView Data Source Methods
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableReuseID", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
         if let item = todoItems?[indexPath.row]{
             cell.textLabel?.text = item.title
             cell.accessoryType =  item.done == true ? .checkmark : .none
+            
+            if let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage:
+               CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+                cell.backgroundColor = color
+                cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+            }
+            
+            //print("version 1: \( CGFloat(indexPath.row / todoItems!.count))")
+            //print("version 1: \( CGFloat(indexPath.row) / CGFloat(todoItems!.count))")
+
         }else{
             cell.textLabel?.text = "No Items Added"
-        }
-        
+        }        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoItems?.count ?? 1
+    }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        if let item = self.todoItems?[indexPath.row]{
+                   do{
+                       try self.realm.write{
+                           self.realm.delete(item)
+                       }
+                   }catch{
+                       print("Error saving done status, \(error)")
+                   }
+               }
     }
     
     //Mark - TableView Delegate Methods
